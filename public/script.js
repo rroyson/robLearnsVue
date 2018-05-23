@@ -2,13 +2,31 @@ new Vue({
   el: '#app',
   data: {
     total: 0,
-    items: [{ title: 'item 1' }, { title: 'item 2' }, { title: 'item 3' }],
+    items: [
+      { title: 'item 1', id: 1 },
+      { title: 'item 2', id: 2 },
+      { title: 'item 3', id: 3 }
+    ],
     cart: []
   },
   methods: {
     addItem: function(index) {
       this.total += 9.99
-      this.cart.push(this.items[index])
+      var item = this.items[index]
+      var found = false
+      for (var i = 0; i < this.cart.length; i++) {
+        if (this.cart[i].id === item.id) {
+          found = true
+          this.cart[i].qty++
+        }
+      }
+      if (!found) {
+        this.cart.push({
+          id: item.id,
+          title: item.title,
+          qty: 1
+        })
+      }
     }
   }
 })
